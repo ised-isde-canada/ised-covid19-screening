@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: 'ISED Covid Screening App: DataStore'
+
+Parameters:
+  Application:
+    Type: String
+    Description: Project/App Identifier
+  Environment:
+    Type: String
+    Description: A description to identify environment (e.g. dev, test, prod)
+  KMSKeyId:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: KMS key used for encrypting DynamoDB tables
+
+Resources:
+
+  CovidScreeningTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    Properties:
+      TableName: !Sub "${Application}-${Environment}-covid-screening"
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: name
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+        - AttributeName: name
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+      SSESpecification:
+        KMSMasterKeyId: !Ref KMSKeyId
+        SSEEnabled: true
+        SSEType: KMS
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: True
+
+  IsedWorkLocationsTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    Properties:
+      TableName: !Sub "${Application}-${Environment}-ised-work-locations"
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      SSESpecification:
+        KMSMasterKeyId: !Ref KMSKeyId
+        SSEEnabled: true
+        SSEType: KMS
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: True
+
+  CovidScreeningTableNameParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: "Covid Screening Table Name"
+      Name: !Sub "/cloudformation/${Application}/${Environment}/datastore/table/covid-screening/name"
+      Type: String
+      Value: !Ref CovidScreeningTable
+
+  CovidScreeningTableArnParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: "Covid Screening Table ARN"
+      Name: !Sub "/cloudformation/${Application}/${Environment}/datastore/table/covid-screening/arn"
+      Type: String
+      Value: !GetAtt CovidScreeningTable.Arn
+
+  IsedWorkLocationsTableNameParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: "ISED Work Locations Table Name"
+      Name: !Sub "/cloudformation/${Application}/${Environment}/datastore/table/ised-work-locations/name"
+      Type: String
+      Value: !Ref IsedWorkLocationsTable
+
+  IsedWorkLocationsTableArnParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: "ISED Work Locations Table ARN"
+      Name: !Sub "/cloudformation/${Application}/${Environment}/datastore/table/ised-work-locations/arn"
+      Type: String
+      Value: !GetAtt IsedWorkLocationsTable.Arn

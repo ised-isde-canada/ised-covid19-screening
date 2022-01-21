@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'ISED S3 Upload: S3 Buckets'
+
+Parameters:
+  DefaultTTL:
+    Type: Number
+    Default: 3600
+  MaxTTL:
+    Type: Number
+    Default: 86400
+  PriceClass:
+    Type: String
+    Default: PriceClass_All
+  OriginBucket:
+    Type: AWS::SSM::Parameter::Value<String>
+
+Resources:
+  StaticDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          DefaultTTL: !Ref DefaultTTL
+          MinTTL: 0
+          MaxTTL: !Ref MaxTTL
+          AllowedMethods: ["GET", "HEAD", "OPTIONS"]
+          CachedMethods: ["GET", "HEAD", "OPTIONS"]
+          Compress: true
+          ForwardedValues:
+            QueryString: false
+            Headers: 
+              - Origin
+              - Access-Control-Request-Headers
+              - Access-Control-Request-Method
+              - Accept-Language
+          TargetOriginId: s3
+          ViewerProtocolPolicy: redirect-to-https
+        DefaultRootObject: index.html
+        CustomErrorResponses:
+          - ErrorCachingMinTTL: 300
+            ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+        Enabled: true
+        HttpVersion: http2
+        Origins:
+          - DomainName: !Sub "${OriginBucket}.s3.amazonaws.com"
+            Id: s3
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${StaticDistributionIdentity}"
+        PriceClass: !Ref PriceClass
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
+          MinimumProtocolVersion: TLSv1
+
+  StaticDistributionIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: 'CloudFront OAI for StaticDistribution'
+
+  StaticDistributionBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref OriginBucket
+      PolicyDocument:
+        Statement:
+          -
+            Action:
+              - s3:GetObject
+            Effect: Allow
+            Resource: !Sub "arn:aws:s3:::${OriginBucket}/*"
+            Principal:
+              CanonicalUser: !GetAtt StaticDistributionIdentity.S3CanonicalUserId

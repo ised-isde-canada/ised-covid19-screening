@@ -1,0 +1,43 @@
+version: 0.2
+# env:
+#   parameter-store:
+#     SONARQUBE_HOSTNAME: /CodeBuild/sonarqube_hostname
+#     SONARQUBE_TOKEN: /CodeBuild/sonarqube_token
+
+phases:
+  install:
+    runtime-versions:
+      ruby: 2.6
+    commands:
+      - gem install cfn-nag
+  build:
+    commands:
+      - echo "Running cfn_nag" 
+      - cfn_nag_scan -g --input-path arch/templates/
+      # - echo "scanning phase"
+      # - export SCANNING_REPORTS="${CODEBUILD_SRC_DIR}/scanning-reports"
+      # - mkdir -m777 $SCANNING_REPORTS
+      # - >-
+      #   docker run --rm
+      #   --volume $CODEBUILD_SRC_DIR/src:/src
+      #   --volume $SCANNING_REPORTS:/reports
+      #   owasp/dependency-check
+      #   --scan /src
+      #   --format "ALL"
+      #   --project "${PROJECT_KEY}"
+      #   --out /reports
+      # - >-
+      #   docker run --rm 
+      #   -e SONAR_HOST_URL="https://${SONARQUBE_HOSTNAME}"
+      #   -e SONAR_LOGIN="${SONARQUBE_TOKEN}" 
+      #   --volume $CODEBUILD_SRC_DIR:/code
+      #   --volume $SCANNING_REPORTS:/reports
+      #   sonarsource/sonar-scanner-cli
+      #   -D sonar.projectBaseDir="/code"
+      #   -D sonar.sources="/code/arch,/code/src"
+      #   -D sonar.projectKey="${PROJECT_KEY}"
+      #   -D sonar.dependencyCheck.htmlReportPath="/reports/dependency-check-report.html"
+      # - rm -fr $SCANNING_REPORTS
+artifacts:
+  files:
+    - '**/*'

@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: 'ISED Covid Screening App: APIGW'
+
+Parameters:
+  Application:
+    Type: String
+    Description: Project/App Identifier
+  Environment:
+    Type: String
+    Description: A description to identify environment (e.g. dev, prod)
+
+Resources:
+  RestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Sub "${Application}-${Environment}-api"
+      Description: !Sub "API GW for ${Application}-${Environment}"
+      EndpointConfiguration:
+        Types:
+          - EDGE
+      FailOnWarnings: true
+
+  RestApiParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: !Sub "${Application}/${Environment}: Rest API ID"
+      Name: !Sub "/cloudformation/${Application}/${Environment}/apigw/id"
+      Type: String
+      Value: !Ref RestApi
+
+  RestApiRootParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: !Sub "${Application}/${Environment}: Rest API Root ID"
+      Name: !Sub "/cloudformation/${Application}/${Environment}/apigw/rootid"
+      Type: String
+      Value: !GetAtt RestApi.RootResourceId

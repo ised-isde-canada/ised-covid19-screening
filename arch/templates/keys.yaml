@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'ISED Covid Screening App: KMS Keys'
+
+Parameters:
+  Environment:
+    Type: String
+  Application:
+    Type: String
+
+Resources:
+  DataStoreKey:
+    Type: AWS::KMS::Key
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      Description: !Sub ${Application}-${Environment}-datastorekey
+      Enabled: true
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: '2012-10-17'
+        Id: key-default-1
+        Statement:
+          - Sid: "Enable IAM User Permissions"
+            Effect: Allow
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Action: kms:*
+            Resource: '*'
+          - Sid: DDB_Direct
+            Effect: Allow
+            Principal:
+              Service: "dynamodb.amazonaws.com"
+            Action:
+                - kms:Describe*
+                - kms:Get*
+                - kms:List*
+            Resource: "*"
+
+  DataStoreKeyIdParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: "Data Store Key ID"
+      Name: !Sub "/cloudformation/${Application}/${Environment}/kms/datastore/id"
+      Type: String
+      Value: !Ref DataStoreKey
+
+  DataStoreKeyArnParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: "Data Store Key ARN"
+      Name: !Sub "/cloudformation/${Application}/${Environment}/kms/datastore/arn"
+      Type: String
+      Value: !GetAtt DataStoreKey.Arn
+
+

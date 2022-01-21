@@ -1,0 +1,22 @@
+[
+  {
+    "ParameterKey": "Application",
+    "ParameterValue": "covid-app"
+  },
+  {
+    "ParameterKey": "Environment",
+    "ParameterValue": "dev"
+  },
+  {
+    "ParameterKey": "PipelineSourcePath",
+    "ParameterValue": "/build/web-app"
+  },
+  {
+    "ParameterKey": "PipelineProjectID",
+    "ParameterValue": "covid-app"
+  },
+  {
+    "ParameterKey": "APIGWAllowedOrigins",
+    "ParameterValue": "https://d7xgblkj3ofcg.cloudfront.net"
+  }
+]

@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: "Test SAM App for local Dev"
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  app:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: python3.9
+      Timeout: 900
+      Environment:
+        Variables:
+          LOG_LEVEL: INFO
+          ASSET_BUCKET: icshub-admin-dev-547111009330-admin-web-assets
+          ARTIFACT_SOURCE_PATH: /build/web-app
+          DELETE_BLACKLIST: static/icons/
+          ASSET_DEPLOY_DIR: ''
+          APP_MANIFEST: asset-manifest.json

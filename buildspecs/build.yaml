@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+      java: corretto8
+    commands:
+      - chmod +x $CODEBUILD_SRC_DIR/tools/*.sh
+      - pip install --user awscliv2 aws-sam-cli
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+  build:
+    commands:
+      - echo "build phase"
+      - $CODEBUILD_SRC_DIR/tools/sambuild.sh -p $CODEBUILD_SRC_DIR
+      - $CODEBUILD_SRC_DIR/tools/mvnbuild.sh -p $CODEBUILD_SRC_DIR
+      - $CODEBUILD_SRC_DIR/tools/package.sh -b $PIPELINE_BUCKET -r $AWS_REGION -t $CODEBUILD_SRC_DIR/arch/templates -p $CODEBUILD_SRC_DIR/arch/templates/build -g $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - $CODEBUILD_SRC_DIR/tools/appbuild.sh -a $CODEBUILD_SRC_DIR/src/web-app/ -b $CODEBUILD_SRC_DIR/src/web-app/dist/covid-screening-frontend-app -d $CODEBUILD_SRC_DIR/build/web-app -e $ENVIRONMENT
+      - $CODEBUILD_SRC_DIR/tools/samclean.sh -p $CODEBUILD_SRC_DIR
+artifacts:
+  files:
+    - '**/*'

@@ -1,0 +1,13 @@
+.skip-to-content-link {
+  margin: 0px;
+  transform: translateY(-130%);
+}
+
+.skip-to-content-link:focus {
+  transform: translateY(0%);
+  z-index: 999;
+}
+
+.wb-slc {
+  z-index: -1;
+}

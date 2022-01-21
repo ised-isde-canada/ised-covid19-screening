@@ -1,0 +1,75 @@
+﻿pk,address-en,address-fr,city,province
+ISED-1001,220 4th Ave. S.E.,"220, 4e av. S.E.",Calgary,AB
+ISED-1002,4712 13 St. N.E.,"4712, 13 rue N.E.",Calgary,AB
+ISED-1003,9015 46 St. N.W.,"9015, 46 rue N.O.",Edmonton,AB
+ISED-1004,9305 50 St. N.W.,"9305, 50 rue N.O.",Edmonton,AB
+ISED-1005,9700 Jasper Ave.,"9700, av. Jasper ",Edmonton,AB
+ISED-1006,1726 Dolphin Ave.,"1726, av. Dolphin",Kelowna,BC
+ISED-1007,277 Winnipeg St.,"277, rue Winnipeg",Penticton,BC
+ISED-1008,280 Victoria St.,"280, rue Victoria",Prince George,BC
+ISED-1009,13401 108 Ave.,"13401, 108 av.",Surrey,BC
+ISED-1010,300 West Georgia St.,"300, rue West Georgia",Vancouver,BC
+ISED-1011,3625 Lougheed Hwy.,3625 Autoroute Lougheed,Vancouver,BC
+ISED-1012,1230 Government St.,"1230, rue Government",Victoria,BC
+ISED-1013,320 Garbally Rd.,320 Garbally Rd.,Victoria,BC
+ISED-1014,2711 Auburn Rd.,2711 Auburn Rd.,West Kelowna,BC
+ISED-1015,1039 Princess Ave.,"1039, av. Princess",Brandon,MB
+ISED-1016,1080 McDermot Ave.,"1080, av. McDermot",Winnipeg,MB
+ISED-1017,400 St. Mary Ave.,"400, av. St Mary",Winnipeg,MB
+ISED-1018,120 Harbourview Blvd.,"120, boul. Harbourview",Bathurst,NB
+ISED-1019,1045 Main St.,"1045, rue Main",Moncton ,NB
+ISED-1020,189 Prince William St.,"189, rue Prince William",Saint John,NB
+ISED-1021,4180 Loch Lomond Rd.,4180 Loch Lomond Rd.,Saint John,NB
+ISED-1022,1 Regent Square,1 Regent Square,Corner Brook,NL
+ISED-1023,26 Kyle Ave.,"26, av. Kyle",Mount Pearl,NL
+ISED-1024,10 Barters Hill,10 Barters Hill,St. John's,NL
+ISED-1025,50 Brown Ave.,"50, av. Brown",Dartmouth,NS
+ISED-1026,1505 Barrington St.,"1505, rue Barrington",Halifax,NS
+ISED-1027,196 George St.,"196, rue George",Sydney,NS
+ISED-1028,5101 50 Ave.,"5101, 50 av.",Yellow Knife,NT
+ISED-1029,274 MacKenzie Ave.,"274, av. MacKenzie",Ajax,ON
+ISED-1030,126 Wellington St. E. #124,"126, rue Wellington E. #124",Aurora,ON
+ISED-1031,328 Sidney St.,"328, rue Sidney",Belleville,ON
+ISED-1032,4475 North Service Rd.,4475 North Service Rd.,Burlington,ON
+ISED-1033,251 Arvin Ave.,"251, av. Arvin",Hamilton,ON
+ISED-1034,55 Bay St.,"55, rue Bay",Hamilton,ON
+ISED-1035,100 Park St.,"100, rue Park",Kenora,ON
+ISED-1036,30 Duke St. W.,"30, rue Duke O.",Kitchener,ON
+ISED-1037,451 Talbot St.,"451, rue Talbot",London,ON
+ISED-1038,78-84 Meg Dr.,78-84 Meg Dr.,London,ON
+ISED-1039,232 Yorktech Dr.,232 Yorktech Dr.,Markham,ON
+ISED-1040,175 Admiral Blvd.,"175, boul. Admiral",Mississauga,ON
+ISED-1041,107 Shirreff Ave.,"107, av. Shirreff",North Bay,ON
+ISED-1042,151 Tunney's Pasture Drwy.,"151 Tunney's Pasture Drwy.",Ottawa,ON
+ISED-1043,160 Elgin St.,"160, rue Elgin",Ottawa,ON
+ISED-1044,235 Queen St.,"235, rue Queen",Ottawa,ON
+ISED-1045,3701 Carling Ave.,"3701, av. Carling",Ottawa,ON
+ISED-1046,410 Laurier Ave. W.,"410, av. Laurier O.",Ottawa,ON
+ISED-1047,7 Bayview Dr.,7 Bayview Dr.,Ottawa,ON
+ISED-1048,900 Dynes Rd.,900 Dynes Rd.,Ottawa,ON
+ISED-1049,950 Ages Dr.,950 Ages Dr.,Ottawa,ON
+ISED-1050,8 Queen St. E.,"8, rue Queen E.",Sault Ste. Marie,ON
+ISED-1051,19 Lisgar St.,"19, rue Lisgar",Sudbury,ON
+ISED-1052,875 Notre Dame Ave.,"875, av. Notre Dame",Sudbury,ON
+ISED-1053,201 May St. N.,"201, rue May N.",Thunder Bay,ON
+ISED-1054,886 Alloy Place,886 Alloy Place,Thunder Bay,ON
+ISED-1055,120 Cedar St. S.,"120, rue Cedar S.",Timmins,ON
+ISED-1056,151 Yonge St.,"151, rue Yonge",Toronto,ON
+ISED-1057,1500 Ouellette Ave.,"1500, av. Ouellette",Windsor,ON
+ISED-1058,191 Great George St.,"191, rue Great George",Charlottetown,PE
+ISED-1059,45 Sacré-Coeur Blvd.,"45, boul. Sacré-Coeur",Gatineau,QC
+ISED-1060,50 Victoria St.,"50, rue Victoria",Gatineau,QC
+ISED-1061,1155 Metcalfe St.,"1155, rue Metcalfe",Montréal,QC
+ISED-1062,1550 D' Estimauville Ave.,"1550, av. d'Estimauville",Québec,QC
+ISED-1063,5000 Rideau St.,"5000, rue Rideau",Québec,QC
+ISED-1064,1400 Marie-Victorin St.,"1400, rue Marie-Victorin",Saint-Bruno-de-Montarville,QC
+ISED-1065,222 Ch. du Chicot,"222, ch. du Chicot",Saint-Eustache,QC
+ISED-1066,9177 Langelier Blvd.,"9177, boul. Langelier",Saint-Léonard,QC
+ISED-1067,2665 King St. W.,"2665, rue King O.",Sherbrooke,QC
+ISED-1068,1150 Broadway Ave.,"1150, av. Broadway",Regina,SK
+ISED-1069,1857 McDonald St.,"1857, rue McDonald",Regina,SK
+ISED-1070,1945 Hamilton St.,"1945, rue Hamilton",Regina,SK
+ISED-1071,123 2nd Ave. S.,"123, 2e av. S.",Saskatoon,SK
+ISED-1072,2404 Thayer Ave.,"2404, av. Thayer",Saskatoon,SK
+ISED-1073,286 Venture Cres.,286 Venture Cres.,Saskatoon,SK
+ISED-1074,300 Main St.,"300, rue Main",Whitehorse,YT

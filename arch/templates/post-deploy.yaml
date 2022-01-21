@@ -1,0 +1,108 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CBSA - ICSHUB: App'
+
+Parameters:
+  PipelineProjectID:
+    Type: String
+  Environment:
+    Type: String
+  LambdaMemory:
+    Type: Number
+    Default: 256
+    AllowedValues:
+      - 128
+      - 256
+      - 512
+      - 1024
+  LambdaEnvLogLevel:
+    Type: String
+    Default: INFO
+  WebAssetBucket:
+    Type: AWS::SSM::Parameter::Value<String>
+  WebAssetDeployDir:
+    Type: String
+    Default: '' ## Note do not include trailing slash
+  PipelineSourcePath:
+    Type: String
+  WebAssetDeleteBlackList:
+    Type: String ## Note comma seperated list of paths to exclude from normal clear up of objects
+    Default: "static/icons/"
+  WebAppManifestFile:
+    Type: String
+    Default: asset-manifest.json
+  APIGWId:
+    Type: AWS::SSM::Parameter::Value<String>
+  APIGWStageName:
+    Type: String
+
+Resources:
+  AppLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${PipelineProjectID}-${Environment}-post-deploy"
+      Description: !Sub "${PipelineProjectID}-${Environment}-post-deploy"
+      Code: "../post_deployment/build/app/"
+      Handler: index.handler
+      MemorySize: !Ref LambdaMemory
+      Runtime: python3.9
+      Timeout: 890 # note 10 seconds less than calling lambda from pipeline
+      Role: !GetAtt AppLambdaRole.Arn
+      Environment:
+        Variables:
+          Environment: !Ref Environment
+          LOG_LEVEL: !Ref LambdaEnvLogLevel
+          ASSET_BUCKET: !Ref WebAssetBucket
+          ASSET_DEPLOY_DIR: !Ref WebAssetDeployDir
+          ARTIFACT_SOURCE_PATH: !Ref PipelineSourcePath
+          DELETE_BLACKLIST: !Ref WebAssetDeleteBlackList
+          APP_MANIFEST: !Ref WebAppManifestFile
+          REST_API_GW_ID: !Ref APIGWId
+          REST_API_GW_STAGE_NAME: !Ref APIGWStageName
+
+  AppLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action:
+          - sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+        Version: '2012-10-17'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyDocument:
+            Statement:
+              - Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:DeleteObject
+                Effect: Allow
+                Resource:
+                  - !Sub "arn:aws:s3:::${WebAssetBucket}/*"
+              - Action:
+                  - s3:ListBucket
+                  - s3:GetBucketLocation
+                Effect: Allow
+                Resource:
+                  - !Sub "arn:aws:s3:::${WebAssetBucket}"
+            Version: "2012-10-17"
+          PolicyName: S3Access
+        - PolicyDocument:
+            Statement:
+              - Action:
+                  - apigateway:PATCH
+                  - apigateway:POST
+                  - apigateway:PUT
+                  - apigateway:GET
+                Effect: Allow
+                Resource:
+                  - !Sub "arn:aws:apigateway:${AWS::Region}::/restapis/${APIGWId}/deployments"
+                  - !Sub "arn:aws:apigateway:${AWS::Region}::/restapis/${APIGWId}/deployments/*"
+                  - !Sub "arn:aws:apigateway:${AWS::Region}::/restapis/${APIGWId}/stages/${APIGWStageName}"
+            Version: "2012-10-17"
+          PolicyName: APIGWAccess
+

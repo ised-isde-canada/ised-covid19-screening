@@ -1,0 +1,110 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: -|
+  Parent Application Cloudformation Template
+
+Parameters:
+  Application:
+    Type: String
+    Description: A project to associate with resources in the template (e.g. 'InitiativeX')
+  Environment:
+    Type: String
+    Description: A description to identify environment (e.g. dev, prod)
+  PipelineSourcePath:
+    Type: String
+  PipelineProjectID:
+    Type: String
+  APIGWAllowedOrigins:
+    Type: String
+  APIGWStage:
+    Type: String
+    Default: live
+  LambdaMemory:
+    Type: Number
+    Default: 512
+    AllowedValues:
+      - 128
+      - 256
+      - 512
+      - 1024
+
+Resources:
+  Keys:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./keys.yaml
+      Parameters:
+        Application: !Ref Application
+        Environment: !Ref Environment
+
+  Datastore:
+    Type: AWS::CloudFormation::Stack
+    DependsOn:
+      - Keys
+    Properties:
+      TemplateURL: ./datastore.yaml
+      Parameters:
+        Application: !Ref Application
+        Environment: !Ref Environment
+        KMSKeyId: !Sub /cloudformation/${Application}/${Environment}/kms/datastore/id
+
+  Api:
+    Type: AWS::CloudFormation::Stack
+    DependsOn:
+      - Datastore
+    Properties:
+      TemplateURL: ./api.yaml
+      Parameters:
+        Application: !Ref Application
+        Environment: !Ref Environment
+
+  CovidScreeningApi:
+    DependsOn:
+      - Api
+      - Datastore
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./api-resources-webapi.yaml
+      Parameters:
+        Application: !Ref Application
+        Environment: !Ref Environment
+        APIGWId: !Sub /cloudformation/${Application}/${Environment}/apigw/id
+        APIGWRootId: !Sub /cloudformation/${Application}/${Environment}/apigw/rootid
+        DataStoreKMSKeyArn: !Sub /cloudformation/${Application}/${Environment}/kms/datastore/arn
+        LambdaEnvCovidScreeningTableName: !Sub /cloudformation/${Application}/${Environment}/datastore/table/covid-screening/name
+        LambdaEnvIsedWorkLocationsTableName: !Sub /cloudformation/${Application}/${Environment}/datastore/table/ised-work-locations/name
+        LambdaMemory: !Ref LambdaMemory
+        APIGWAllowedOrigins: !Ref APIGWAllowedOrigins
+        Stage: !Ref APIGWStage
+
+  Buckets:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./buckets.yaml
+      Parameters:
+        Application: !Ref Application
+        Environment: !Ref Environment
+
+  CloudFront:
+    DependsOn: 
+      - Buckets
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./cloudfront.yaml
+      Parameters:
+        OriginBucket: !Sub /cloudformation/${Application}/${Environment}/s3/webasset/name
+
+  PostDeploy:
+    Type: AWS::CloudFormation::Stack
+    DependsOn:
+      - Buckets
+      - Api
+      - CovidScreeningApi
+    Properties:
+      TemplateURL: "./post-deploy.yaml"
+      Parameters:
+        PipelineProjectID: !Ref PipelineProjectID
+        Environment: !Ref Environment
+        WebAssetBucket: !Sub /cloudformation/${Application}/${Environment}/s3/webasset/name
+        PipelineSourcePath: !Ref PipelineSourcePath
+        APIGWId: !Sub /cloudformation/${Application}/${Environment}/apigw/id
+        APIGWStageName: !Ref APIGWStage

@@ -1,0 +1,818 @@
+{
+  "IsedWorkLocations": [
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1001" },
+          "address-en": { "S": "220 4th Ave. S.E." },
+          "address-fr": { "S": "220, 4e av. S.E." },
+          "city": { "S": "Calgary" },
+          "province": { "S": "AB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1002" },
+          "address-en": { "S": "4712 13 St. N.E." },
+          "address-fr": { "S": "4712, 13 rue N.E." },
+          "city": { "S": "Calgary" },
+          "province": { "S": "AB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1003" },
+          "address-en": { "S": "9015 46 St. N.W." },
+          "address-fr": { "S": "9015, 46 rue N.O." },
+          "city": { "S": "Edmonton" },
+          "province": { "S": "AB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1004" },
+          "address-en": { "S": "9305 50 St. N.W." },
+          "address-fr": { "S": "9305, 50 rue N.O." },
+          "city": { "S": "Edmonton" },
+          "province": { "S": "AB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1005" },
+          "address-en": { "S": "9700 Jasper Ave." },
+          "address-fr": { "S": "9700, av. Jasper " },
+          "city": { "S": "Edmonton" },
+          "province": { "S": "AB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1006" },
+          "address-en": { "S": "1726 Dolphin Ave." },
+          "address-fr": { "S": "1726, av. Dolphin" },
+          "city": { "S": "Kelowna" },
+          "province": { "S": "BC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1007" },
+          "address-en": { "S": "277 Winnipeg St." },
+          "address-fr": { "S": "277, rue Winnipeg" },
+          "city": { "S": "Penticton" },
+          "province": { "S": "BC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1008" },
+          "address-en": { "S": "280 Victoria St." },
+          "address-fr": { "S": "280, rue Victoria" },
+          "city": { "S": "Prince George" },
+          "province": { "S": "BC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1009" },
+          "address-en": { "S": "13401 108 Ave." },
+          "address-fr": { "S": "13401, 108 av." },
+          "city": { "S": "Surrey" },
+          "province": { "S": "BC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1010" },
+          "address-en": { "S": "300 West Georgia St." },
+          "address-fr": { "S": "300, rue West Georgia" },
+          "city": { "S": "Vancouver" },
+          "province": { "S": "BC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1011" },
+          "address-en": { "S": "3625 Lougheed Hwy." },
+          "address-fr": { "S": "3625 Autoroute Lougheed" },
+          "city": { "S": "Vancouver" },
+          "province": { "S": "BC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1012" },
+          "address-en": { "S": "1230 Government St." },
+          "address-fr": { "S": "1230, rue Government" },
+          "city": { "S": "Victoria" },
+          "province": { "S": "BC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1013" },
+          "address-en": { "S": "320 Garbally Rd." },
+          "address-fr": { "S": "320 Garbally Rd." },
+          "city": { "S": "Victoria" },
+          "province": { "S": "BC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1014" },
+          "address-en": { "S": "2711 Auburn Rd." },
+          "address-fr": { "S": "2711 Auburn Rd." },
+          "city": { "S": "West Kelowna" },
+          "province": { "S": "BC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1015" },
+          "address-en": { "S": "1039 Princess Ave." },
+          "address-fr": { "S": "1039, av. Princess" },
+          "city": { "S": "Brandon" },
+          "province": { "S": "MB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1016" },
+          "address-en": { "S": "1080 McDermot Ave." },
+          "address-fr": { "S": "1080, av. McDermot" },
+          "city": { "S": "Winnipeg" },
+          "province": { "S": "MB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1017" },
+          "address-en": { "S": "400 St. Mary Ave." },
+          "address-fr": { "S": "400, av. St Mary" },
+          "city": { "S": "Winnipeg" },
+          "province": { "S": "MB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1018" },
+          "address-en": { "S": "120 Harbourview Blvd." },
+          "address-fr": { "S": "120, boul. Harbourview" },
+          "city": { "S": "Bathurst" },
+          "province": { "S": "NB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1019" },
+          "address-en": { "S": "1045 Main St." },
+          "address-fr": { "S": "1045, rue Main" },
+          "city": { "S": "Moncton " },
+          "province": { "S": "NB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1020" },
+          "address-en": { "S": "189 Prince William St." },
+          "address-fr": { "S": "189, rue Prince William" },
+          "city": { "S": "Saint John" },
+          "province": { "S": "NB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1021" },
+          "address-en": { "S": "4180 Loch Lomond Rd." },
+          "address-fr": { "S": "4180 Loch Lomond Rd." },
+          "city": { "S": "Saint John" },
+          "province": { "S": "NB" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1022" },
+          "address-en": { "S": "1 Regent Square" },
+          "address-fr": { "S": "1 Regent Square" },
+          "city": { "S": "Corner Brook" },
+          "province": { "S": "NL" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1023" },
+          "address-en": { "S": "26 Kyle Ave." },
+          "address-fr": { "S": "26, av. Kyle" },
+          "city": { "S": "Mount Pearl" },
+          "province": { "S": "NL" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1024" },
+          "address-en": { "S": "10 Barters Hill" },
+          "address-fr": { "S": "10 Barters Hill" },
+          "city": { "S": "St. John's" },
+          "province": { "S": "NL" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1025" },
+          "address-en": { "S": "50 Brown Ave." },
+          "address-fr": { "S": "50, av. Brown" },
+          "city": { "S": "Dartmouth" },
+          "province": { "S": "NS" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1026" },
+          "address-en": { "S": "1505 Barrington St." },
+          "address-fr": { "S": "1505, rue Barrington" },
+          "city": { "S": "Halifax" },
+          "province": { "S": "NS" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1027" },
+          "address-en": { "S": "196 George St." },
+          "address-fr": { "S": "196, rue George" },
+          "city": { "S": "Sydney" },
+          "province": { "S": "NS" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1028" },
+          "address-en": { "S": "5101 50 Ave." },
+          "address-fr": { "S": "5101, 50 av." },
+          "city": { "S": "Yellow Knife" },
+          "province": { "S": "NT" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1029" },
+          "address-en": { "S": "274 MacKenzie Ave." },
+          "address-fr": { "S": "274, av. MacKenzie" },
+          "city": { "S": "Ajax" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1030" },
+          "address-en": { "S": "126 Wellington St. E. #124" },
+          "address-fr": { "S": "126, rue Wellington E. #124" },
+          "city": { "S": "Aurora" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1031" },
+          "address-en": { "S": "328 Sidney St." },
+          "address-fr": { "S": "328, rue Sidney" },
+          "city": { "S": "Belleville" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1032" },
+          "address-en": { "S": "4475 North Service Rd." },
+          "address-fr": { "S": "4475 North Service Rd." },
+          "city": { "S": "Burlington" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1033" },
+          "address-en": { "S": "251 Arvin Ave." },
+          "address-fr": { "S": "251, av. Arvin" },
+          "city": { "S": "Hamilton" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1034" },
+          "address-en": { "S": "55 Bay St." },
+          "address-fr": { "S": "55, rue Bay" },
+          "city": { "S": "Hamilton" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1035" },
+          "address-en": { "S": "100 Park St." },
+          "address-fr": { "S": "100, rue Park" },
+          "city": { "S": "Kenora" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1036" },
+          "address-en": { "S": "30 Duke St. W." },
+          "address-fr": { "S": "30, rue Duke O." },
+          "city": { "S": "Kitchener" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1037" },
+          "address-en": { "S": "451 Talbot St." },
+          "address-fr": { "S": "451, rue Talbot" },
+          "city": { "S": "London" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1038" },
+          "address-en": { "S": "78-84 Meg Dr." },
+          "address-fr": { "S": "78-84 Meg Dr." },
+          "city": { "S": "London" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1039" },
+          "address-en": { "S": "232 Yorktech Dr." },
+          "address-fr": { "S": "232 Yorktech Dr." },
+          "city": { "S": "Markham" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1040" },
+          "address-en": { "S": "175 Admiral Blvd." },
+          "address-fr": { "S": "175, boul. Admiral" },
+          "city": { "S": "Mississauga" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1041" },
+          "address-en": { "S": "107 Shirreff Ave." },
+          "address-fr": { "S": "107, av. Shirreff" },
+          "city": { "S": "North Bay" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1042" },
+          "address-en": { "S": "151 Tunney's Pasture Drwy." },
+          "address-fr": { "S": "151 Tunney's Pasture Drwy." },
+          "city": { "S": "Ottawa" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1043" },
+          "address-en": { "S": "160 Elgin St." },
+          "address-fr": { "S": "160, rue Elgin" },
+          "city": { "S": "Ottawa" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1044" },
+          "address-en": { "S": "235 Queen St." },
+          "address-fr": { "S": "235, rue Queen" },
+          "city": { "S": "Ottawa" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1045" },
+          "address-en": { "S": "3701 Carling Ave." },
+          "address-fr": { "S": "3701, av. Carling" },
+          "city": { "S": "Ottawa" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1046" },
+          "address-en": { "S": "410 Laurier Ave. W." },
+          "address-fr": { "S": "410, av. Laurier O." },
+          "city": { "S": "Ottawa" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1047" },
+          "address-en": { "S": "7 Bayview Dr." },
+          "address-fr": { "S": "7 Bayview Dr." },
+          "city": { "S": "Ottawa" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1048" },
+          "address-en": { "S": "900 Dynes Rd." },
+          "address-fr": { "S": "900 Dynes Rd." },
+          "city": { "S": "Ottawa" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1049" },
+          "address-en": { "S": "950 Ages Dr." },
+          "address-fr": { "S": "950 Ages Dr." },
+          "city": { "S": "Ottawa" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1050" },
+          "address-en": { "S": "8 Queen St. E." },
+          "address-fr": { "S": "8, rue Queen E." },
+          "city": { "S": "Sault Ste. Marie" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1051" },
+          "address-en": { "S": "19 Lisgar St." },
+          "address-fr": { "S": "19, rue Lisgar" },
+          "city": { "S": "Sudbury" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1052" },
+          "address-en": { "S": "875 Notre Dame Ave." },
+          "address-fr": { "S": "875, av. Notre Dame" },
+          "city": { "S": "Sudbury" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1053" },
+          "address-en": { "S": "201 May St. N." },
+          "address-fr": { "S": "201, rue May N." },
+          "city": { "S": "Thunder Bay" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1054" },
+          "address-en": { "S": "886 Alloy Place" },
+          "address-fr": { "S": "886 Alloy Place" },
+          "city": { "S": "Thunder Bay" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1055" },
+          "address-en": { "S": "120 Cedar St. S." },
+          "address-fr": { "S": "120, rue Cedar S." },
+          "city": { "S": "Timmins" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1056" },
+          "address-en": { "S": "151 Yonge St." },
+          "address-fr": { "S": "151, rue Yonge" },
+          "city": { "S": "Toronto" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1057" },
+          "address-en": { "S": "1500 Ouellette Ave." },
+          "address-fr": { "S": "1500, av. Ouellette" },
+          "city": { "S": "Windsor" },
+          "province": { "S": "ON" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1058" },
+          "address-en": { "S": "191 Great George St." },
+          "address-fr": { "S": "191, rue Great George" },
+          "city": { "S": "Charlottetown" },
+          "province": { "S": "PE" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1059" },
+          "address-en": { "S": "45 Sacr\u00e9-Coeur Blvd." },
+          "address-fr": { "S": "45, boul. Sacr\u00e9-Coeur" },
+          "city": { "S": "Gatineau" },
+          "province": { "S": "QC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1060" },
+          "address-en": { "S": "50 Victoria St." },
+          "address-fr": { "S": "50, rue Victoria" },
+          "city": { "S": "Gatineau" },
+          "province": { "S": "QC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1061" },
+          "address-en": { "S": "1155 Metcalfe St." },
+          "address-fr": { "S": "1155, rue Metcalfe" },
+          "city": { "S": "Montr\u00e9al" },
+          "province": { "S": "QC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1062" },
+          "address-en": { "S": "1550 D' Estimauville Ave." },
+          "address-fr": { "S": "1550, av. d'Estimauville" },
+          "city": { "S": "Qu\u00e9bec" },
+          "province": { "S": "QC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1063" },
+          "address-en": { "S": "5000 Rideau St." },
+          "address-fr": { "S": "5000, rue Rideau" },
+          "city": { "S": "Qu\u00e9bec" },
+          "province": { "S": "QC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1064" },
+          "address-en": { "S": "1400 Marie-Victorin St." },
+          "address-fr": { "S": "1400, rue Marie-Victorin" },
+          "city": { "S": "Saint-Bruno-de-Montarville" },
+          "province": { "S": "QC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1065" },
+          "address-en": { "S": "222 Ch. du Chicot" },
+          "address-fr": { "S": "222, ch. du Chicot" },
+          "city": { "S": "Saint-Eustache" },
+          "province": { "S": "QC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1066" },
+          "address-en": { "S": "9177 Langelier Blvd." },
+          "address-fr": { "S": "9177, boul. Langelier" },
+          "city": { "S": "Saint-L\u00e9onard" },
+          "province": { "S": "QC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1067" },
+          "address-en": { "S": "2665 King St. W." },
+          "address-fr": { "S": "2665, rue King O." },
+          "city": { "S": "Sherbrooke" },
+          "province": { "S": "QC" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1068" },
+          "address-en": { "S": "1150 Broadway Ave." },
+          "address-fr": { "S": "1150, av. Broadway" },
+          "city": { "S": "Regina" },
+          "province": { "S": "SK" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1069" },
+          "address-en": { "S": "1857 McDonald St." },
+          "address-fr": { "S": "1857, rue McDonald" },
+          "city": { "S": "Regina" },
+          "province": { "S": "SK" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1070" },
+          "address-en": { "S": "1945 Hamilton St." },
+          "address-fr": { "S": "1945, rue Hamilton" },
+          "city": { "S": "Regina" },
+          "province": { "S": "SK" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1071" },
+          "address-en": { "S": "123 2nd Ave. S." },
+          "address-fr": { "S": "123, 2e av. S." },
+          "city": { "S": "Saskatoon" },
+          "province": { "S": "SK" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1072" },
+          "address-en": { "S": "2404 Thayer Ave." },
+          "address-fr": { "S": "2404, av. Thayer" },
+          "city": { "S": "Saskatoon" },
+          "province": { "S": "SK" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1073" },
+          "address-en": { "S": "286 Venture Cres." },
+          "address-fr": { "S": "286 Venture Cres." },
+          "city": { "S": "Saskatoon" },
+          "province": { "S": "SK" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "pk": { "S": "ISED-1074" },
+          "address-en": { "S": "300 Main St." },
+          "address-fr": { "S": "300, rue Main" },
+          "city": { "S": "Whitehorse" },
+          "province": { "S": "YT" }
+        }
+      }
+    }
+  ]
+}

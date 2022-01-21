@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'ISED S3 Upload: S3 Buckets'
+
+Parameters:
+  Application:
+    Type: String
+    Description: A description to identify project
+  Environment:
+    Type: String
+    Description: A description to identify environment (e.g. dev, prod)
+
+Resources:
+  WebAssetBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${Application}-${Environment}-${AWS::AccountId}-webasset"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: 'AES256'
+            BucketKeyEnabled: true
+
+  WebAssetBucketParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: Upload bucket Arn
+      Name: !Sub "/cloudformation/${Application}/${Environment}/s3/webasset/name"
+      Type: String
+      Value: !Ref WebAssetBucket

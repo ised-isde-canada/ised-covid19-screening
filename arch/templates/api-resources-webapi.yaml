@@ -1,0 +1,418 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: 'ISED S3 Upload: API Method/Lambda'
+
+Parameters:
+  Application:
+    Type: String
+    Description: Project/App Identifier
+  Environment:
+    Type: String
+    Description: A description to identify environment (e.g. dev, prod)
+  APIGWId:
+    Type: AWS::SSM::Parameter::Value<String>
+  APIGWRootId:
+    Type: AWS::SSM::Parameter::Value<String>
+  APIGWAllowedOrigins:
+    Type: String
+  Stage:
+    Type: String
+    Default: live
+  DataStoreKMSKeyArn:
+    Type: AWS::SSM::Parameter::Value<String>
+  LambdaEnvCovidScreeningTableName:
+    Type: AWS::SSM::Parameter::Value<String>
+  LambdaEnvIsedWorkLocationsTableName:
+    Type: AWS::SSM::Parameter::Value<String>
+  LambdaMemory:
+    Type: Number
+    Default: 512
+    AllowedValues:
+      - 128
+      - 256
+      - 512
+      - 1024
+
+Resources:
+  LambdasExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: DDBKeyAccess
+          PolicyDocument:
+            Statement:
+              - Action:
+                  - kms:Decrypt
+                  - kms:DescribeKey
+                Effect: Allow
+                Resource:
+                  - !Ref DataStoreKMSKeyArn
+                Condition:
+                  StringLike:
+                    "kms:ViaService": "dynamodb.*.amazonaws.com"
+            Version: '2012-10-17'
+        - PolicyName: DDBAccess
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'dynamodb:Query'
+                  - 'dynamodb:Scan'
+                  - 'dynamodb:GetItem'
+                  - 'dynamodb:PutItem'
+                  - 'dynamodb:UpdateItem'
+                  - 'dynamodb:DeleteItem'
+                Resource:
+                  - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${LambdaEnvCovidScreeningTableName}"
+                  - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${LambdaEnvIsedWorkLocationsTableName}"
+
+  # ============================================================================================
+  # API gateway Resources
+  CovidScreeningApiGatewayResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref APIGWId
+      ParentId: !Ref APIGWRootId
+      PathPart: 'covidscreening'
+
+  CovidScreeningIDVarApiGatewayResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref APIGWId
+      ParentId: !Ref CovidScreeningApiGatewayResource
+      PathPart: '{id}'
+
+  IsedWorklocationApiGatewayResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref APIGWId
+      ParentId: !Ref CovidScreeningApiGatewayResource
+      PathPart: 'isedworklocations'
+
+  # ============================================================================================
+  # OPTIONS - CORS
+  CovidScreeningResourceOptionsMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGWId
+      AuthorizationType: NONE
+      HttpMethod: OPTIONS
+      ResourceId: !Ref CovidScreeningApiGatewayResource
+      ApiKeyRequired: false
+      MethodResponses:
+        - ResponseParameters:
+            "method.response.header.Access-Control-Allow-Headers": true
+            "method.response.header.Access-Control-Allow-Methods": true
+            "method.response.header.Access-Control-Allow-Origin": true
+          StatusCode: "200"
+      Integration:
+        Type: MOCK
+        IntegrationResponses:
+          - StatusCode: "200"
+            ResponseParameters:
+              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
+              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,POST,DELETE,HEAD'"
+              "method.response.header.Access-Control-Allow-Origin": !Sub "'${APIGWAllowedOrigins}'"
+        RequestTemplates:
+          "application/json": "{\n \"statusCode\": 200\n}"
+
+  CovidScreeningIdResourceOptionsMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGWId
+      AuthorizationType: NONE
+      HttpMethod: OPTIONS
+      ResourceId: !Ref IsedWorklocationApiGatewayResource
+      ApiKeyRequired: false
+      MethodResponses:
+        - ResponseParameters:
+            "method.response.header.Access-Control-Allow-Headers": true
+            "method.response.header.Access-Control-Allow-Methods": true
+            "method.response.header.Access-Control-Allow-Origin": true
+          StatusCode: "200"
+      Integration:
+        Type: MOCK
+        IntegrationResponses:
+          - StatusCode: "200"
+            ResponseParameters:
+              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
+              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,POST,DELETE,HEAD'"
+              "method.response.header.Access-Control-Allow-Origin": !Sub "'${APIGWAllowedOrigins}'"
+        RequestTemplates:
+          "application/json": "{\n \"statusCode\": 200\n}"
+
+  IsedWorkLocationsResourceOptionsMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGWId
+      AuthorizationType: NONE
+      HttpMethod: OPTIONS
+      ResourceId: !Ref CovidScreeningIDVarApiGatewayResource
+      ApiKeyRequired: false
+      MethodResponses:
+        - ResponseParameters:
+            "method.response.header.Access-Control-Allow-Headers": true
+            "method.response.header.Access-Control-Allow-Methods": true
+            "method.response.header.Access-Control-Allow-Origin": true
+          StatusCode: "200"
+      Integration:
+        Type: MOCK
+        IntegrationResponses:
+          - StatusCode: "200"
+            ResponseParameters:
+              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
+              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,POST,DELETE,HEAD'"
+              "method.response.header.Access-Control-Allow-Origin": !Sub "'${APIGWAllowedOrigins}'"
+        RequestTemplates:
+          "application/json": "{\n \"statusCode\": 200\n}"
+
+  # ============================================================================================
+  # List Covid Screening
+  CovidscreeningListLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${Application}-${Environment}-covid-screening-list"
+      Description: !Sub "${Application}-${Environment}-covid-screening-list"
+      Code: "../../src/api/target/covid-screening-api-dev.jar"
+      Handler: "com.serverless.ListCovidScreeningHandler"
+      Role: !GetAtt LambdasExecutionRole.Arn
+      Runtime: "java8"
+      MemorySize: !Ref LambdaMemory
+      Timeout: 15
+      Environment:
+        Variables:
+          COVIDSCREENING_TABLE_NAME: !Ref LambdaEnvCovidScreeningTableName
+          ISEDWORKLOCATIONS_TABLE_NAME: !Ref LambdaEnvIsedWorkLocationsTableName
+
+  CovidscreeningListLambdaPermissions:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt CovidscreeningListLambda.Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGWId}/*'
+
+  CovidscreeningListMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGWId
+      ResourceId: !Ref CovidScreeningApiGatewayResource
+      HttpMethod: GET
+      ApiKeyRequired: false
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Sub
+            - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn}/invocations
+            - LambdaArn: !GetAtt CovidscreeningListLambda.Arn
+
+  # ============================================================================================
+  # Get Covid Screening ID
+  CovidscreeningGetIDLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${Application}-${Environment}-covid-screening-get-id"
+      Description: !Sub "${Application}-${Environment}-covid-screening-get-id"
+      Code: "../../src/api/target/covid-screening-api-dev.jar"
+      Handler: "com.serverless.GetCovidScreeningHandler"
+      Role: !GetAtt LambdasExecutionRole.Arn
+      Runtime: "java8"
+      MemorySize: !Ref LambdaMemory
+      Timeout: 15
+      Environment:
+        Variables:
+          COVIDSCREENING_TABLE_NAME: !Ref LambdaEnvCovidScreeningTableName
+          ISEDWORKLOCATIONS_TABLE_NAME: !Ref LambdaEnvIsedWorkLocationsTableName
+
+  CovidscreeningGetLambdaPermissions:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt CovidscreeningGetIDLambda.Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGWId}/*'
+
+  CovidscreeningGetMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGWId
+      ResourceId: !Ref CovidScreeningIDVarApiGatewayResource
+      HttpMethod: GET
+      ApiKeyRequired: false
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Sub
+            - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn}/invocations
+            - LambdaArn: !GetAtt CovidscreeningGetIDLambda.Arn
+
+  # ============================================================================================
+  # Create Covid Screening
+  CovidscreeningCreateLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${Application}-${Environment}-covid-screening-create"
+      Description: !Sub "${Application}-${Environment}-covid-screening-create"
+      Code: "../../src/api/target/covid-screening-api-dev.jar"
+      Handler: "com.serverless.CreateCovidScreeningHandler"
+      Role: !GetAtt LambdasExecutionRole.Arn
+      Runtime: "java8"
+      MemorySize: !Ref LambdaMemory
+      Timeout: 15
+      Environment:
+        Variables:
+          COVIDSCREENING_TABLE_NAME: !Ref LambdaEnvCovidScreeningTableName
+          ISEDWORKLOCATIONS_TABLE_NAME: !Ref LambdaEnvIsedWorkLocationsTableName
+
+  CovidscreeningCreateLambdaPermissions:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt CovidscreeningCreateLambda.Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGWId}/*'
+
+  CovidscreeningCreateMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGWId
+      ResourceId: !Ref CovidScreeningApiGatewayResource
+      HttpMethod: POST
+      ApiKeyRequired: false
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Sub
+            - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn}/invocations
+            - LambdaArn: !GetAtt CovidscreeningCreateLambda.Arn
+
+  # ============================================================================================
+  # Delete Covid Screening
+  CovidscreeningDeleteLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${Application}-${Environment}-covid-screening-delete"
+      Description: !Sub "${Application}-${Environment}-covid-screening-delete"
+      Code: "../../src/api/target/covid-screening-api-dev.jar"
+      Handler: "com.serverless.DeleteCovidScreeningHandler"
+      Role: !GetAtt LambdasExecutionRole.Arn
+      Runtime: "java8"
+      MemorySize: !Ref LambdaMemory
+      Timeout: 15
+      Environment:
+        Variables:
+          COVIDSCREENING_TABLE_NAME: !Ref LambdaEnvCovidScreeningTableName
+          ISEDWORKLOCATIONS_TABLE_NAME: !Ref LambdaEnvIsedWorkLocationsTableName
+
+  CovidscreeningDeleteLambdaPermissions:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt CovidscreeningDeleteLambda.Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGWId}/*'
+
+  CovidscreeningDeleteMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGWId
+      ResourceId: !Ref CovidScreeningIDVarApiGatewayResource
+      HttpMethod: DELETE
+      ApiKeyRequired: false
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Sub
+            - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn}/invocations
+            - LambdaArn: !GetAtt CovidscreeningDeleteLambda.Arn
+
+  # ============================================================================================
+  # List ISED Work Locations
+  IsedWorkLocationsListLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${Application}-${Environment}-ised-work-locations-list"
+      Description: !Sub "${Application}-${Environment}-ised-work-locations-list"
+      Code: "../../src/api/target/covid-screening-api-dev.jar"
+      Handler: "com.serverless.ListIsedWorkLocationsHandler"
+      Role: !GetAtt LambdasExecutionRole.Arn
+      Runtime: "java8"
+      MemorySize: !Ref LambdaMemory
+      Timeout: 15
+      Environment:
+        Variables:
+          COVIDSCREENING_TABLE_NAME: !Ref LambdaEnvCovidScreeningTableName
+          ISEDWORKLOCATIONS_TABLE_NAME: !Ref LambdaEnvIsedWorkLocationsTableName
+
+  IsedWorkLocationsListLambdaPermissions:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt IsedWorkLocationsListLambda.Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGWId}/*'
+
+  IsedWorkLocationsListMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref APIGWId
+      ResourceId: !Ref IsedWorklocationApiGatewayResource
+      HttpMethod: GET
+      ApiKeyRequired: false
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Sub
+            - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn}/invocations
+            - LambdaArn: !GetAtt IsedWorkLocationsListLambda.Arn
+
+  # ============================================================================================
+  # API Deployment
+  CovidScreeningApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - CovidscreeningListMethod
+      - CovidscreeningGetMethod
+      - CovidscreeningCreateMethod
+      - CovidscreeningDeleteMethod
+      - IsedWorkLocationsListMethod
+      - CovidscreeningListLambdaPermissions
+      - CovidscreeningGetLambdaPermissions
+      - CovidscreeningCreateLambdaPermissions
+      - CovidscreeningDeleteLambdaPermissions
+      - IsedWorkLocationsListLambdaPermissions
+    Properties:
+      RestApiId: !Ref APIGWId
+
+  CovidScreeningApiStage:
+    Type: AWS::ApiGateway::Stage
+    DependsOn:
+      - CovidScreeningApiDeployment
+    Properties:
+      RestApiId: !Ref APIGWId
+      StageName: !Ref Stage
+      DeploymentId: !Ref CovidScreeningApiDeployment
+      MethodSettings:
+        - ResourcePath: "/*"
+          HttpMethod: "*"
+          MetricsEnabled: true
+          DataTraceEnabled: false
